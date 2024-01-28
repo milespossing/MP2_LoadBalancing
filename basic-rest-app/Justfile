@@ -1,0 +1,13 @@
+set shell := ["nu", "-c"]
+
+build:
+  cargo build
+
+run:
+  cargo run
+
+get:
+  http get http://localhost:3030
+
+post:
+  http post -t application/json http://localhost:3030 { num: 22 }
