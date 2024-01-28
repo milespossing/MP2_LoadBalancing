@@ -12,7 +12,7 @@ def index():
 
 @app.route('/', methods=['POST'])
 def post():
-    subprocess.Popen(["python", "stress.py"])
+    subprocess.Popen(["python3", "stress.py"])
     return ''
 
 app.run(host='0.0.0.0', port=3030)
