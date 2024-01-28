@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def index():
-    return socket.gethostname()
+    return socket.gethostbyname(socket.gethostname())
 
 @app.route('/', methods=['POST'])
 def post():
