@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use std::sync::RwLock;
+use std::{env, sync::RwLock};
 use warp::Filter;
 
 pub static SEED: RwLock<i64> = RwLock::new(0);
@@ -11,6 +11,11 @@ struct PatchBody {
 
 #[tokio::main]
 async fn main() {
+    let args: Vec<String> = env::args().collect();
+    let port: u16 = match args.get(1) {
+        None => 80,
+        Some(s) => s.parse::<u16>().unwrap(),
+    };
     let get = warp::get()
         .and(warp::path::end())
         .map(|| format!("{}", SEED.read().unwrap()));
@@ -26,5 +31,6 @@ async fn main() {
 
     let routes = get.or(post);
 
-    warp::serve(routes).run(([127, 0, 0, 1], 3030)).await;
+    println!("Running on {}", port);
+    warp::serve(routes).run(([0, 0, 0, 0], port)).await;
 }
